@@ -448,7 +448,7 @@ def main(_):
 														 min_lrn_rate=0.0001,
 														 lrn_rate=0.1,
 														 num_residual_units=5,
-														 use_bottleneck=False,
+														 use_bottleneck=True,
 														 weight_decay_rate=0.0002,
 														 relu_leakiness=0.1,
 														 optimizer='mom')

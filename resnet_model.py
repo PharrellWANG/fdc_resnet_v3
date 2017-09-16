@@ -62,21 +62,30 @@ class ResNet(object):
 			else:
 				x = self._conv('init_conv', x, 3, 3, 16, self._stride_arr(1))
 		
-		strides = [1, 2, 2]
+		strides = [1, 1, 1]
 		activate_before_residual = [True, False, False]
 		if self.hps.use_bottleneck:
 			res_func = self._bottleneck_residual
 			filters = [16, 64, 128, 256]
 		else:
 			res_func = self._residual
-			# filters = [16, 16, 32, 64]
+			filters = [16, 16, 32, 64]
 			# Uncomment the following codes to use w28-10 wide residual network.
 			# It is more memory efficient than very deep residual network and has
 			# comparably good performance.
 			# https://arxiv.org/pdf/1605.07146v1.pdf
+			
+			# Caveats start: ===================================================
+			# <pha.zx> DO NOT use [16, 160, 320, 640] on my macbook pro. Otherwise
+		  # GPU will auto power off. Mac will shut down itself due to a problem.
+		  # Because the power supply and memory of my e-GPU (GTX 980) are not capable of
+		  # doing this scale.
 			# filters = [16, 160, 320, 640]
-			filters = [16, 120, 240, 480]  # pharrell
+			#
+			# Below filter combination won't shut mac down
+			# filters = [16, 120, 240, 480]  # pharrell
 			# Update hps.num_residual_units to 4
+			# Caveats end: ===================================================
 		
 		with tf.variable_scope('unit_1_0'):
 			x = res_func(x, filters[0], filters[1],
