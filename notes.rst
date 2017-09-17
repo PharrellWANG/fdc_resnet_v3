@@ -77,3 +77,10 @@ step 3: fdc evaluating
 
     $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/data/finalized/validate_08x08.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
 
+
+tensorboard
+^^^^^^^^^^^
+
+.. code-block:: bash
+
+    $ tensorboard --logdir=/Users/Pharrell_WANG/workspace/models/resnet/log

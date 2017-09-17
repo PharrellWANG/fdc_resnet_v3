@@ -82,8 +82,8 @@ class ResNet(object):
 		  # doing this scale.
 			# filters = [16, 160, 320, 640]
 			#
-			# Below filter combination won't shut mac down
-			filters = [16, 120, 240, 480]  # pharrell
+			# Below filter combination won't shut mac down if you remembered to change units to 4.
+			filters = [16, 80, 160, 320]  # pharrell
 			# Update hps.num_residual_units to 4
 			# Caveats end: ===================================================
 		
