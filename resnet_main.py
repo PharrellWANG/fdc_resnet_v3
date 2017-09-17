@@ -20,7 +20,7 @@ tf.app.flags.DEFINE_string('train_dir', '',
 													 'Directory to keep training outputs.')
 tf.app.flags.DEFINE_string('eval_dir', '', 'Directory to keep eval outputs.')
 
-tf.app.flags.DEFINE_integer('eval_batch_count', 280,
+tf.app.flags.DEFINE_integer('eval_batch_count', 208,
 														'Number of batches to eval.')
 
 tf.app.flags.DEFINE_integer('eval_batch_size', 100,
@@ -37,7 +37,7 @@ tf.app.flags.DEFINE_integer('num_gpus', 0,
 														'Number of gpus used for training. (0 or 1)')
 tf.app.flags.DEFINE_integer('block_size', 8,
 														'block_size for fdc, can be 8, 16, 32 or 64')
-tf.app.flags.DEFINE_integer('target_classes', 28, 'classes for fdc')
+tf.app.flags.DEFINE_integer('target_classes', 32, 'classes for fdc')
 tf.app.flags.DEFINE_bool('DMM_included', False,
 												 'is DMM included in the target classes')
 tf.app.flags.DEFINE_bool('sleep_time', 360,
@@ -448,7 +448,7 @@ def main(_):
 														 min_lrn_rate=0.0001,
 														 lrn_rate=0.1,
 														 num_residual_units=5,
-														 use_bottleneck=True,
+														 use_bottleneck=False,
 														 weight_decay_rate=0.0002,
 														 relu_leakiness=0.1,
 														 optimizer='mom')

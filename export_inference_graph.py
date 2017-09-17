@@ -40,7 +40,7 @@ tf.app.flags.DEFINE_integer(
 	'The image size to use, otherwise use the model default_image_size.')
 
 tf.app.flags.DEFINE_integer(
-	'number_of_classes', 28,
+	'number_of_classes', 32,
 	'number of classes')
 
 tf.app.flags.DEFINE_integer(
