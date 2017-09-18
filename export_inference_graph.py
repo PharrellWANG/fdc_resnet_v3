@@ -36,7 +36,7 @@ tf.app.flags.DEFINE_boolean(
 	'Whether to save out a training-focused version of the model.')
 
 tf.app.flags.DEFINE_integer(
-	'image_size', 8,
+	'image_size', 16,
 	'The image size to use, otherwise use the model default_image_size.')
 
 tf.app.flags.DEFINE_integer(
@@ -74,7 +74,7 @@ def main(_):
 															 num_classes=FLAGS.number_of_classes,
 															 min_lrn_rate=0.0001,
 															 lrn_rate=0.1,
-															 num_residual_units=4,
+															 num_residual_units=5,
 															 use_bottleneck=False,
 															 weight_decay_rate=0.0002,
 															 relu_leakiness=0.1,

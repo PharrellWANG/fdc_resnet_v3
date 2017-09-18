@@ -15,12 +15,12 @@ tf.app.flags.DEFINE_string('mode', 'train', 'train or eval.')
 tf.app.flags.DEFINE_string('train_data_path', '',
 													 'Filepattern for training data.')
 tf.app.flags.DEFINE_string('eval_data_path', '', 'Filepattern for eval data')
-tf.app.flags.DEFINE_integer('image_size', 8, 'Image side length.')
+tf.app.flags.DEFINE_integer('image_size', 16, 'Image side length.')
 tf.app.flags.DEFINE_string('train_dir', '',
 													 'Directory to keep training outputs.')
 tf.app.flags.DEFINE_string('eval_dir', '', 'Directory to keep eval outputs.')
 
-tf.app.flags.DEFINE_integer('eval_batch_count', 208,
+tf.app.flags.DEFINE_integer('eval_batch_count', 192,
 														'Number of batches to eval.')
 
 tf.app.flags.DEFINE_integer('eval_batch_size', 100,
@@ -35,7 +35,7 @@ tf.app.flags.DEFINE_string('log_root', '',
 													 'Directory to keep the checkpoints. Should be a parent directory of FLAGS.train_dir/eval_dir.')
 tf.app.flags.DEFINE_integer('num_gpus', 0,
 														'Number of gpus used for training. (0 or 1)')
-tf.app.flags.DEFINE_integer('block_size', 8,
+tf.app.flags.DEFINE_integer('block_size', 16,
 														'block_size for fdc, can be 8, 16, 32 or 64')
 tf.app.flags.DEFINE_integer('target_classes', 32, 'classes for fdc')
 tf.app.flags.DEFINE_bool('DMM_included', False,
@@ -90,10 +90,10 @@ def train(hps):
 			"""Sets learning_rate based on global step."""
 			
 			def __init__(self):
-				self._lrn_rate = 0.1
+				self._lrn_rate = 0.01
 			
 			def begin(self):
-				self._lrn_rate = 0.1
+				self._lrn_rate = 0.01
 			
 			def before_run(self, run_context):
 				return tf.train.SessionRunArgs(
@@ -103,14 +103,14 @@ def train(hps):
 			
 			def after_run(self, run_context, run_values):
 				train_step = run_values.results
-				if train_step < 40000:
-					self._lrn_rate = 0.1
-				elif train_step < 60000:
+				if train_step < 20000:
 					self._lrn_rate = 0.01
-				elif train_step < 100000:
+				elif train_step < 40000:
 					self._lrn_rate = 0.001
-				else:
+				elif train_step < 60000:
 					self._lrn_rate = 0.0001
+				else:
+					self._lrn_rate = 0.00001
 		
 		with tf.train.MonitoredTrainingSession(
 			checkpoint_dir=FLAGS.log_root,
@@ -447,7 +447,7 @@ def main(_):
 														 num_classes=num_classes,
 														 min_lrn_rate=0.0001,
 														 lrn_rate=0.1,
-														 num_residual_units=4,
+														 num_residual_units=5,
 														 use_bottleneck=False,
 														 weight_decay_rate=0.0002,
 														 relu_leakiness=0.1,

@@ -69,7 +69,7 @@ class ResNet(object):
 			filters = [16, 64, 128, 256]
 		else:
 			res_func = self._residual
-			# filters = [16, 16, 32, 64]
+			filters = [16, 16, 32, 64]
 			# Uncomment the following codes to use w28-10 wide residual network.
 			# It is more memory efficient than very deep residual network and has
 			# comparably good performance.
@@ -83,7 +83,7 @@ class ResNet(object):
 			# filters = [16, 160, 320, 640]
 			#
 			# Below filter combination won't shut mac down if you remembered to change units to 4.
-			filters = [16, 80, 160, 320]  # pharrell
+			# filters = [16, 80, 160, 320]  # pharrell
 			# Update hps.num_residual_units to 4
 			# Caveats end: ===================================================
 		
@@ -290,7 +290,14 @@ class ResNet(object):
 				'DW', [filter_size, filter_size, in_filters, out_filters],
 				tf.float32, initializer=tf.random_normal_initializer(
 					stddev=np.sqrt(2.0 / n)))
-			return tf.nn.conv2d(x, kernel, strides, padding='SAME')
+			conv = tf.nn.conv2d(x, kernel, strides, padding='SAME')
+			
+			# x_min = tf.reduce_min(kernel)
+			# x_max = tf.reduce_max(kernel)
+			# kernel_0_to_1 = (kernel - x_min) /(x_max - x_min)
+			# kernel_transposed = tf.transpose(kernel_0_to_1, [3, 0, 1, 2])
+			# tf.summary.image('kernels', kernel_transposed)
+			return conv
 	
 	def _relu(self, x, leakiness=0.0):
 		"""Relu, with optional leaky support."""
