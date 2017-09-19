@@ -27,7 +27,7 @@ Example from tensorflow slim lib:
 
 .. code-block:: bash
 
-    $ bazel-bin/tensorflow/python/tools/freeze_graph --input_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/resnet_inf_graph_for_fdc.pb --input_checkpoint=/Users/Pharrell_WANG/workspace/models/resnet/log/model.ckpt-202282 --input_binary=true --output_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/frozen_resnet_for_fdc_202282.pb --output_node_names=logits/fdc_output_node
+    $ bazel-bin/tensorflow/python/tools/freeze_graph --input_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/resnet_inf_graph_for_fdc.pb --input_checkpoint=/Users/Pharrell_WANG/workspace/models/resnet/log/model.ckpt-304857 --input_binary=true --output_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/frozen_resnet_for_fdc_blk16x16_304857.pb --output_node_names=logits/fdc_output_node
 
 
 Run it in c++
@@ -75,7 +75,7 @@ step 3: fdc evaluating
 
 .. code-block:: bash
 
-    $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/data/finalized/size_16/val_16x16.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
+    $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/data/finalized/size_08/val_08x08.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
 
 
 tensorboard
