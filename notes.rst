@@ -75,7 +75,10 @@ step 3: fdc evaluating
 
 .. code-block:: bash
 
-    $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/data/finalized/size_08/val_08x08.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
+    $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/data/finalized/val_32x32.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
+    # another path:
+    $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/Downloads/32_classes_for_eval_from_gf_news_hall_shark/eval_32x32.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
+
 
 
 tensorboard
