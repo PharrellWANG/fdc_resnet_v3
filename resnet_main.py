@@ -20,7 +20,7 @@ tf.app.flags.DEFINE_string('train_dir', '',
 													 'Directory to keep training outputs.')
 tf.app.flags.DEFINE_string('eval_dir', '', 'Directory to keep eval outputs.')
 
-tf.app.flags.DEFINE_integer('eval_batch_count', 213,
+tf.app.flags.DEFINE_integer('eval_batch_count', 319,
 														'Number of batches to eval.')
 
 tf.app.flags.DEFINE_integer('eval_batch_size', 100,
@@ -29,7 +29,7 @@ tf.app.flags.DEFINE_integer('eval_batch_size', 100,
 tf.app.flags.DEFINE_integer('train_batch_size', 128,
 														'Number of samples in a single batch to train.')
 
-tf.app.flags.DEFINE_bool('eval_once', False,
+tf.app.flags.DEFINE_bool('eval_once', True,
 												 'Whether evaluate the model only once.')
 tf.app.flags.DEFINE_string('log_root', '',
 													 'Directory to keep the checkpoints. Should be a parent directory of FLAGS.train_dir/eval_dir.')
@@ -186,6 +186,20 @@ def evaluate(hps):
 			correct_top_20_prediction = 0
 			top_20_prediction_total = 0
 			
+			correct_top_22_prediction = 0
+			top_22_prediction_total = 0
+			
+			correct_top_23_prediction = 0
+			top_23_prediction_total = 0
+			
+			correct_top_24_prediction = 0
+			top_24_prediction_total = 0
+			
+			correct_top_25_prediction = 0
+			top_25_prediction_total = 0
+			correct_top_26_prediction = 0
+			top_26_prediction_total = 0
+			
 			correct_top_28_prediction = 0
 			top_28_prediction_total = 0
 			
@@ -193,7 +207,7 @@ def evaluate(hps):
 			summaries = 0  # for eliminating IDE warning
 			
 			start = time.time()
-			confusion_matrix_8x8 = np.zeros(
+			confusion_matrix = np.zeros(
 				(FLAGS.target_classes, FLAGS.target_classes))
 			# noinspection PyUnresolvedReferences
 			bc_cnt = 0
@@ -230,6 +244,13 @@ def evaluate(hps):
 					for_top_18 = col.argsort()[-18:][::-1]
 					for_top_19 = col.argsort()[-19:][::-1]
 					for_top_20 = col.argsort()[-20:][::-1]
+					
+					for_top_22 = col.argsort()[-22:][::-1]
+					for_top_23 = col.argsort()[-23:][::-1]
+					for_top_24 = col.argsort()[-24:][::-1]
+					for_top_25 = col.argsort()[-25:][::-1]
+					for_top_26 = col.argsort()[-26:][::-1]
+					
 					for_top_28 = col.argsort()[-28:][::-1]
 					if row in for_top_5:
 						correct_top_5_prediction += 1
@@ -283,6 +304,26 @@ def evaluate(hps):
 						correct_top_20_prediction += 1
 					top_20_prediction_total += 1
 					
+					if row in for_top_22:
+						correct_top_22_prediction += 1
+					top_22_prediction_total += 1
+					
+					if row in for_top_23:
+						correct_top_23_prediction += 1
+					top_23_prediction_total += 1
+					
+					if row in for_top_24:
+						correct_top_24_prediction += 1
+					top_24_prediction_total += 1
+					
+					if row in for_top_25:
+						correct_top_25_prediction += 1
+					top_25_prediction_total += 1
+					
+					if row in for_top_26:
+						correct_top_26_prediction += 1
+					top_26_prediction_total += 1
+					
 					if row in for_top_28:
 						correct_top_28_prediction += 1
 					top_28_prediction_total += 1
@@ -291,7 +332,7 @@ def evaluate(hps):
 				for idx in range(hps.batch_size):
 					row = truth[idx]
 					col = predictions[idx]
-					confusion_matrix_8x8[row, col] += 1
+					confusion_matrix[row, col] += 1
 				
 				correct_prediction += np.sum(truth == predictions)
 				total_prediction += predictions.shape[0]
@@ -299,7 +340,7 @@ def evaluate(hps):
 			np.savetxt(
 				"/Users/Pharrell_WANG/workspace/models/resnet/confusion_matrix/"
 				+ str(ckpt_state.model_checkpoint_path)[-10:] + ".csv",
-				confusion_matrix_8x8, fmt='%i',
+				confusion_matrix, fmt='%i',
 				delimiter=",")
 			# confusion matrix
 			precision = 1.0 * correct_prediction / total_prediction
@@ -318,6 +359,13 @@ def evaluate(hps):
 			top_18 = 1.0 * correct_top_18_prediction / top_18_prediction_total
 			top_19 = 1.0 * correct_top_19_prediction / top_19_prediction_total
 			top_20 = 1.0 * correct_top_20_prediction / top_20_prediction_total
+			
+			top_22 = 1.0 * correct_top_22_prediction / top_22_prediction_total
+			top_23 = 1.0 * correct_top_23_prediction / top_23_prediction_total
+			top_24 = 1.0 * correct_top_24_prediction / top_24_prediction_total
+			top_25 = 1.0 * correct_top_25_prediction / top_25_prediction_total
+			top_26 = 1.0 * correct_top_26_prediction / top_26_prediction_total
+			
 			top_28 = 1.0 * correct_top_28_prediction / top_28_prediction_total
 			
 			top_5_summ = tf.Summary()
@@ -385,6 +433,31 @@ def evaluate(hps):
 				tag='top_20', simple_value=top_20)
 			summary_writer.add_summary(top_20_summ, train_step)
 			
+			top_22_summ = tf.Summary()
+			top_22_summ.value.add(
+				tag='top_22', simple_value=top_22)
+			summary_writer.add_summary(top_22_summ, train_step)
+			
+			top_23_summ = tf.Summary()
+			top_23_summ.value.add(
+				tag='top_23', simple_value=top_23)
+			summary_writer.add_summary(top_23_summ, train_step)
+			
+			top_24_summ = tf.Summary()
+			top_24_summ.value.add(
+				tag='top_24', simple_value=top_24)
+			summary_writer.add_summary(top_24_summ, train_step)
+			
+			top_25_summ = tf.Summary()
+			top_25_summ.value.add(
+				tag='top_25', simple_value=top_25)
+			summary_writer.add_summary(top_25_summ, train_step)
+			
+			top_26_summ = tf.Summary()
+			top_26_summ.value.add(
+				tag='top_26', simple_value=top_26)
+			summary_writer.add_summary(top_26_summ, train_step)
+			
 			top_28_summ = tf.Summary()
 			top_28_summ.value.add(
 				tag='top_28', simple_value=top_28)
@@ -404,10 +477,13 @@ def evaluate(hps):
 				'precision: %.3f, best precision: %.3f, \n top_5: %.3f, '
 				'top_6: %.3f, top_7: %.3f, top_8: %.3f, top_9: %.3f, top_10: %.3f, '
 				'top_11: %.3f, top_12: %.3f, top_16: %.3f, top_17: %.3f, '
-				'top_18: %.3f, top_19: %.3f, top_20: %.3f, top_28: %.3f, ' %
+				'top_18: %.3f, top_19: %.3f, top_20: %.3f, top_22: %.3f, '
+				'top_23: %.3f, top_24: %.3f, top_25: %.3f, top_26: %.3f'
+				'top_28: %.3f, ' %
 				(precision, best_precision, top_5, top_6, top_7,
 				 top_8, top_9, top_10, top_11, top_12, top_16, top_17,
-				 top_18, top_19, top_20, top_28,
+				 top_18, top_19, top_20, top_22, top_23, top_24, top_25, top_26,
+				 top_28,
 				 ))
 			summary_writer.flush()
 			
