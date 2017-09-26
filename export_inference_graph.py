@@ -36,7 +36,7 @@ tf.app.flags.DEFINE_boolean(
 	'Whether to save out a training-focused version of the model.')
 
 tf.app.flags.DEFINE_integer(
-	'image_size', 16,
+	'image_size', 8,
 	'The image size to use, otherwise use the model default_image_size.')
 
 tf.app.flags.DEFINE_integer(
@@ -44,7 +44,7 @@ tf.app.flags.DEFINE_integer(
 	'number of classes')
 
 tf.app.flags.DEFINE_integer(
-	'batch_size', 1,
+	'batch_size', 12288,  # can be 12288=(1024/8)*(768/8) for video size: 1024*768
 	'Batch size for the exported model. Defaulted to ``int(1)``')
 
 tf.app.flags.DEFINE_string('dataset', 'fdc',

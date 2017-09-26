@@ -15,7 +15,7 @@ tf.app.flags.DEFINE_string('mode', 'train', 'train or eval.')
 tf.app.flags.DEFINE_string('train_data_path', '',
 													 'Filepattern for training data.')
 tf.app.flags.DEFINE_string('eval_data_path', '', 'Filepattern for eval data')
-tf.app.flags.DEFINE_integer('image_size', 32, 'True image length.')
+tf.app.flags.DEFINE_integer('image_size', 8, 'True image length.')
 tf.app.flags.DEFINE_string('train_dir', '',
 													 'Directory to keep training outputs.')
 tf.app.flags.DEFINE_string('eval_dir', '', 'Directory to keep eval outputs.')
@@ -35,7 +35,7 @@ tf.app.flags.DEFINE_string('log_root', '',
 													 'Directory to keep the checkpoints. Should be a parent directory of FLAGS.train_dir/eval_dir.')
 tf.app.flags.DEFINE_integer('num_gpus', 0,
 														'Number of gpus used for training. (0 or 1)')
-tf.app.flags.DEFINE_integer('block_size', 16,
+tf.app.flags.DEFINE_integer('block_size', 8,
 														'block_size for fdc, can be 8, 16, 32 or 64')
 tf.app.flags.DEFINE_integer('target_classes', 32, 'classes for fdc')
 tf.app.flags.DEFINE_bool('DMM_included', False,
@@ -127,7 +127,8 @@ def train(hps):
 
 def evaluate(hps):
 	"""Eval loop."""
-	with tf.device('/cpu:0'):
+	# with tf.device('/cpu:0'):
+	with tf.device('/gpu:0'):
 		images, labels = data_input.build_input(
 			FLAGS.dataset, FLAGS.eval_data_path, hps.batch_size, FLAGS.mode,
 			FLAGS.block_size, FLAGS.target_classes, is_resize=FLAGS.image_size)
