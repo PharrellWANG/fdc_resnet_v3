@@ -60,14 +60,18 @@ step 1: Build the binary
 
 .. code-block:: bash
 
+    # Method 1: build with NO sse4.2 and avx optimizations:
     $ bazel build -c opt --config=cuda resnet/...
+
+    # Method 2 (preferred): build with sse4.2 and avx optimizations:
+    $ bazel build -c opt --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-msse4.2 --config=cuda -k resnet/...
 
 step 2: fdc training
 ^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
-    $ bazel-bin/resnet/resnet_main --train_data_path='/Users/Pharrell_WANG/data/finalized/size_16/train_16x16.csv' --log_root='/Users/Pharrell_WANG/workspace/models/resnet/log' --train_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/train' --dataset='fdc' --num_gpus=1
+    $ bazel-bin/resnet/resnet_main --train_data_path='/Users/Pharrell_WANG/data/finalized/size_08/train_08x08.csv' --log_root='/Users/Pharrell_WANG/workspace/models/resnet/log' --train_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/train' --dataset='fdc' --num_gpus=1
 
 
 step 3: fdc evaluating
@@ -75,7 +79,7 @@ step 3: fdc evaluating
 
 .. code-block:: bash
 
-    $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/data/finalized/val_32x32.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
+    $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/data/finalized/size_08/val_08x08.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
     # another path:
     $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/Downloads/32_classes_for_eval_from_gf_news_hall_shark/eval_32x32.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
 
