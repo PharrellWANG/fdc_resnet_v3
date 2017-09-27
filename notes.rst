@@ -27,7 +27,7 @@ Example from tensorflow slim lib:
 
 .. code-block:: bash
 
-    $ bazel-bin/tensorflow/python/tools/freeze_graph --input_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/resnet_inf_graph_for_fdc.pb --input_checkpoint=/Users/Pharrell_WANG/workspace/models/resnet/log/model.ckpt-133049 --input_binary=true --output_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/gpu_frozen_resnet_fdc_12288_8x8_133049.pb --output_node_names=logits/fdc_output_node
+    $ bazel-bin/tensorflow/python/tools/freeze_graph --input_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/resnet_inf_graph_for_fdc.pb --input_checkpoint=/Users/Pharrell_WANG/workspace/models/resnet/log/model.ckpt-26663 --input_binary=true --output_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/gpu_frozen_resnet_fdc_12288_8x8_26663.pb --output_node_names=logits/fdc_output_node
 
 
 Run it in c++
@@ -59,6 +59,8 @@ step 1: Build the binary
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
+    # !! Considering the running speed, please always use **Method 2** !!
+    # !! If you don't have GPU support, just remove the flag for cuda  !!
 
     # Method 1: build with NO sse4.2 and avx optimizations:
     $ bazel build -c opt --config=cuda resnet/...

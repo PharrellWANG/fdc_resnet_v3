@@ -20,7 +20,7 @@ tf.app.flags.DEFINE_string('train_dir', '',
 													 'Directory to keep training outputs.')
 tf.app.flags.DEFINE_string('eval_dir', '', 'Directory to keep eval outputs.')
 
-tf.app.flags.DEFINE_integer('eval_batch_count', 319,
+tf.app.flags.DEFINE_integer('eval_batch_count', 192,
 														'Number of batches to eval.')
 
 tf.app.flags.DEFINE_integer('eval_batch_size', 100,
@@ -115,6 +115,7 @@ def train(hps):
 		
 		with tf.train.MonitoredTrainingSession(
 			checkpoint_dir=FLAGS.log_root,
+			save_checkpoint_secs=120,  # in seconds
 			hooks=[logging_hook, _LearningRateSetterHook()],
 			chief_only_hooks=[summary_hook],
 			# Since we provide a SummarySaverHook, we need to disable default
@@ -127,8 +128,8 @@ def train(hps):
 
 def evaluate(hps):
 	"""Eval loop."""
-	# with tf.device('/cpu:0'):
-	with tf.device('/gpu:0'):
+	with tf.device('/cpu:0'):
+	# with tf.device('/gpu:0'):
 		images, labels = data_input.build_input(
 			FLAGS.dataset, FLAGS.eval_data_path, hps.batch_size, FLAGS.mode,
 			FLAGS.block_size, FLAGS.target_classes, is_resize=FLAGS.image_size)
@@ -525,7 +526,7 @@ def main(_):
 														 num_classes=num_classes,
 														 min_lrn_rate=0.000001,
 														 lrn_rate=0.01,
-														 num_residual_units=5,
+														 num_residual_units=3,
 														 use_bottleneck=False,
 														 weight_decay_rate=0.0002,
 														 relu_leakiness=0.1,
