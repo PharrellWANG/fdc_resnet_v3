@@ -20,10 +20,10 @@ tf.app.flags.DEFINE_string('train_dir', '',
 													 'Directory to keep training outputs.')
 tf.app.flags.DEFINE_string('eval_dir', '', 'Directory to keep eval outputs.')
 
-tf.app.flags.DEFINE_integer('eval_batch_count', 192,
+tf.app.flags.DEFINE_integer('eval_batch_count', 96,
 														'Number of batches to eval.')
 
-tf.app.flags.DEFINE_integer('eval_batch_size', 100,
+tf.app.flags.DEFINE_integer('eval_batch_size', 200,
 														'Number of samples in a single batch to eval.')
 
 tf.app.flags.DEFINE_integer('train_batch_size', 128,
@@ -129,7 +129,6 @@ def train(hps):
 def evaluate(hps):
 	"""Eval loop."""
 	with tf.device('/cpu:0'):
-	# with tf.device('/gpu:0'):
 		images, labels = data_input.build_input(
 			FLAGS.dataset, FLAGS.eval_data_path, hps.batch_size, FLAGS.mode,
 			FLAGS.block_size, FLAGS.target_classes, is_resize=FLAGS.image_size)
@@ -503,7 +502,6 @@ def evaluate(hps):
 
 
 def main(_):
-	
 	if FLAGS.mode == 'train':
 		batch_size = FLAGS.train_batch_size
 	elif FLAGS.mode == 'eval':
