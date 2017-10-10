@@ -65,7 +65,7 @@ def build_input(dataset, data_path, batch_size, mode, block_size,
 			pass
 		else:
 			size_tensor = tf.constant([image_size, image_size])
-			image = tf.image.resize_images(image, size_tensor, 0, False)
+			image = tf.image.resize_images(image, size_tensor, 3, False)
 		# class ResizeMethod(object):
 		# BILINEAR = 0
 		# NEAREST_NEIGHBOR = 1

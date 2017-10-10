@@ -58,8 +58,7 @@ class ResNet(object):
 			# name of input layer: 'init/input_node'
 			# self.input_images = tf.reshape(x, shape=[-1, 8, 8, 1], name="input_node")
 			if self.hps.dataset_name == 'fdc':
-				x = self._conv('init_conv', x, 3, 1, 4, self._stride_arr(1))
-				# x = self._conv('init_conv', x, 3, 1, 16, self._stride_arr(1))
+				x = self._conv('init_conv', x, 3, 1, 16, self._stride_arr(1))
 			else:
 				x = self._conv('init_conv', x, 3, 3, 16, self._stride_arr(1))
 		
@@ -70,10 +69,7 @@ class ResNet(object):
 			filters = [16, 64, 128, 256]
 		else:
 			res_func = self._residual
-			filters = [4, 4, 8, 16]
-			
-			# filters = [16, 16, 32, 64]
-			
+			filters = [16, 16, 32, 64]
 			# Uncomment the following codes to use w28-10 wide residual network.
 			# It is more memory efficient than very deep residual network and has
 			# comparably good performance.

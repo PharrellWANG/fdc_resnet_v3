@@ -27,7 +27,7 @@ Example from tensorflow slim lib:
 
 .. code-block:: bash
 
-    $ bazel-bin/tensorflow/python/tools/freeze_graph --input_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/resnet_inf_graph_for_fdc.pb --input_checkpoint=/Users/Pharrell_WANG/workspace/models/resnet/log/model.ckpt-26663 --input_binary=true --output_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/gpu_frozen_resnet_fdc_12288_8x8_26663.pb --output_node_names=logits/fdc_output_node
+    $ bazel-bin/tensorflow/python/tools/freeze_graph --input_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/resnet_inf_graph_for_fdc.pb --input_checkpoint=/Users/Pharrell_WANG/workspace/models/resnet/log/model.ckpt-304857 --input_binary=true --output_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/frozen_resnet_for_fdc_blk32x32_batchsize2040_step304857.pb --output_node_names=logits/fdc_output_node
 
 
 Run it in c++
@@ -59,21 +59,15 @@ step 1: Build the binary
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
-    # !! Considering the running speed, please always use **Method 2** !!
-    # !! If you don't have GPU support, just remove the flag for cuda  !!
 
-    # Method 1: build with NO sse4.2 and avx optimizations:
     $ bazel build -c opt --config=cuda resnet/...
-
-    # Method 2 (preferred): build with sse4.2 and avx optimizations:
-    $ bazel build -c opt --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-msse4.2 --config=cuda -k resnet/...
 
 step 2: fdc training
 ^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
-    $ bazel-bin/resnet/resnet_main --train_data_path='/Users/Pharrell_WANG/data/finalized/size_08/train_08x08.csv' --log_root='/Users/Pharrell_WANG/workspace/models/resnet/log' --train_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/train' --dataset='fdc' --num_gpus=1
+    $ bazel-bin/resnet/resnet_main --train_data_path='/Users/Pharrell_WANG/data/finalized/size_16/train_16x16.csv' --log_root='/Users/Pharrell_WANG/workspace/models/resnet/log' --train_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/train' --dataset='fdc' --num_gpus=1
 
 
 step 3: fdc evaluating
@@ -81,10 +75,7 @@ step 3: fdc evaluating
 
 .. code-block:: bash
 
-    $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/data/finalized/size_08/val_08x08.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
-    # another path:
-    $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/Downloads/32_classes_for_eval_from_gf_news_hall_shark/eval_08x08.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
-
+    $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/data/finalized/val_64x64.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
 
 
 tensorboard

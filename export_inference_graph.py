@@ -36,15 +36,17 @@ tf.app.flags.DEFINE_boolean(
 	'Whether to save out a training-focused version of the model.')
 
 tf.app.flags.DEFINE_integer(
-	'image_size', 8,
+	'image_size', 32,
 	'The image size to use, otherwise use the model default_image_size.')
 
 tf.app.flags.DEFINE_integer(
 	'number_of_classes', 32,
 	'number of classes')
-
+# 8x8: 12288, 32640
+# 16x16: 3072, 8160
+# 32x32: 768, 2040
 tf.app.flags.DEFINE_integer(
-	'batch_size', 12288,  # can be 12288=(1024/8)*(768/8) for video size: 1024*768
+	'batch_size', 2040, #
 	'Batch size for the exported model. Defaulted to ``int(1)``')
 
 tf.app.flags.DEFINE_string('dataset', 'fdc',
@@ -69,12 +71,15 @@ def main(_):
 																				image_size,
 																				image_size,
 																				1])
+		if image_size == 32:
+			size_tensor = tf.constant([16, 16])
+			placeholder = tf.image.resize_images(placeholder, size_tensor, 3, False)
 		hps = resnet_model.HParams(dataset_name=FLAGS.dataset,
 															 batch_size=FLAGS.batch_size,
 															 num_classes=FLAGS.number_of_classes,
-															 min_lrn_rate=0.000001,
-															 lrn_rate=0.01,
-															 num_residual_units=3,
+															 min_lrn_rate=0.0001,
+															 lrn_rate=0.1,
+															 num_residual_units=5,
 															 use_bottleneck=False,
 															 weight_decay_rate=0.0002,
 															 relu_leakiness=0.1,
