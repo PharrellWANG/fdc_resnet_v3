@@ -55,6 +55,8 @@ Quick Memo
 Fast intra angular Prediction (applicable to DMM1)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. note:: ``cd ~/repository/models`` for all the commands in below three steps.
+
 step 1: Build the binary
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
