@@ -173,6 +173,14 @@ def evaluate(hps):
 			top_11_prediction_total = 0
 			correct_top_12_prediction = 0
 			top_12_prediction_total = 0
+			
+			correct_top_13_prediction = 0
+			top_13_prediction_total = 0
+			correct_top_14_prediction = 0
+			top_14_prediction_total = 0
+			correct_top_15_prediction = 0
+			top_15_prediction_total = 0
+			
 			correct_top_16_prediction = 0
 			top_16_prediction_total = 0
 			
@@ -224,6 +232,9 @@ def evaluate(hps):
 					for_top_10 = col.argsort()[-10:][::-1]
 					for_top_11 = col.argsort()[-11:][::-1]
 					for_top_12 = col.argsort()[-12:][::-1]
+					for_top_13 = col.argsort()[-13:][::-1]
+					for_top_14 = col.argsort()[-14:][::-1]
+					for_top_15 = col.argsort()[-15:][::-1]
 					for_top_16 = col.argsort()[-16:][::-1]
 					for_top_17 = col.argsort()[-17:][::-1]
 					for_top_18 = col.argsort()[-18:][::-1]
@@ -261,6 +272,18 @@ def evaluate(hps):
 					if row in for_top_12:
 						correct_top_12_prediction += 1
 					top_12_prediction_total += 1
+					
+					if row in for_top_13:
+						correct_top_13_prediction += 1
+					top_13_prediction_total += 1
+					
+					if row in for_top_14:
+						correct_top_14_prediction += 1
+					top_14_prediction_total += 1
+					
+					if row in for_top_15:
+						correct_top_15_prediction += 1
+					top_15_prediction_total += 1
 					
 					if row in for_top_16:
 						correct_top_16_prediction += 1
@@ -312,6 +335,9 @@ def evaluate(hps):
 			top_10 = 1.0 * correct_top_10_prediction / top_10_prediction_total
 			top_11 = 1.0 * correct_top_11_prediction / top_11_prediction_total
 			top_12 = 1.0 * correct_top_12_prediction / top_12_prediction_total
+			top_13 = 1.0 * correct_top_13_prediction / top_13_prediction_total
+			top_14 = 1.0 * correct_top_14_prediction / top_14_prediction_total
+			top_15 = 1.0 * correct_top_15_prediction / top_15_prediction_total
 			top_16 = 1.0 * correct_top_16_prediction / top_16_prediction_total
 			top_17 = 1.0 * correct_top_17_prediction / top_17_prediction_total
 			top_18 = 1.0 * correct_top_18_prediction / top_18_prediction_total
@@ -359,6 +385,21 @@ def evaluate(hps):
 				tag='top_12', simple_value=top_12)
 			summary_writer.add_summary(top_12_summ, train_step)
 			
+			top_13_summ = tf.Summary()
+			top_13_summ.value.add(
+				tag='top_13', simple_value=top_13)
+			summary_writer.add_summary(top_13_summ, train_step)
+			
+			top_14_summ = tf.Summary()
+			top_14_summ.value.add(
+				tag='top_14', simple_value=top_14)
+			summary_writer.add_summary(top_14_summ, train_step)
+			
+			top_15_summ = tf.Summary()
+			top_15_summ.value.add(
+				tag='top_15', simple_value=top_15)
+			summary_writer.add_summary(top_15_summ, train_step)
+			
 			top_16_summ = tf.Summary()
 			top_16_summ.value.add(
 				tag='top_16', simple_value=top_16)
@@ -402,10 +443,10 @@ def evaluate(hps):
 			tf.logging.info(
 				'precision: %.3f, best precision: %.3f, \n top_5: %.3f, '
 				'top_6: %.3f, top_7: %.3f, top_8: %.3f, top_9: %.3f, top_10: %.3f, '
-				'top_11: %.3f, top_12: %.3f, top_16: %.3f, top_17: %.3f, '
+				'top_11: %.3f, top_12: %.3f, top_13: %.3f, top_14: %.3f, top_15: %.3f, top_16: %.3f, top_17: %.3f, '
 				'top_18: %.3f, top_19: %.3f, top_20: %.3f, top_28: %.3f, ' %
 				(precision, best_precision, top_5, top_6, top_7,
-				 top_8, top_9, top_10, top_11, top_12, top_16, top_17,
+				 top_8, top_9, top_10, top_11, top_12, top_13, top_14, top_15, top_16, top_17,
 				 top_18, top_19, top_20, top_28,
 				 ))
 			summary_writer.flush()
