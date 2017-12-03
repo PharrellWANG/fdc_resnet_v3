@@ -44,9 +44,9 @@ tf.app.flags.DEFINE_integer(
 	'number of classes')
 
 # 1024*768		:	12288
-# 1920*1080		: 32640 || half: 16320
+# 1920*1080		: 32640
 tf.app.flags.DEFINE_integer(
-	'batch_size', 16320,
+	'batch_size', 32640,
 	'Batch size for the exported model. Defaulted to ``int(1)``')
 
 tf.app.flags.DEFINE_string('dataset', 'fdc',

@@ -27,7 +27,7 @@ Example from tensorflow slim lib:
 
 .. code-block:: bash
 
-    $ bazel-bin/tensorflow/python/tools/freeze_graph --input_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/resnet_inf_graph_for_fdc_32640.pb --input_checkpoint=/Users/Pharrell_WANG/workspace/models/resnet/log/model.ckpt-133049 --input_binary=true --output_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/frozen_resnet_for_fdc_blk8x8_batchsize16320_step133049.pb --output_node_names=logits/fdc_output_node
+    $ bazel-bin/tensorflow/python/tools/freeze_graph --input_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/resnet_inf_graph_for_fdc_32640.pb --input_checkpoint=/Users/Pharrell_WANG/workspace/models/resnet/log/model.ckpt-133049 --input_binary=true --output_graph=/Users/Pharrell_WANG/workspace/models/resnet/graphs/frozen_resnet_for_fdc_blk8x8_batchsize32640_step133049.pb --output_node_names=logits/fdc_output_node
 
 
 Run it in c++
@@ -54,8 +54,6 @@ Quick Memo
 
 Fast intra angular Prediction (applicable to DMM1)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. note:: ``cd ~/repository/models`` for all the commands in below three steps.
 
 step 1: Build the binary
 ^^^^^^^^^^^^^^^^^^^^^^^^
