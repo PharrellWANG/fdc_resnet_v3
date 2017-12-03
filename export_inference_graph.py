@@ -36,17 +36,17 @@ tf.app.flags.DEFINE_boolean(
 	'Whether to save out a training-focused version of the model.')
 
 tf.app.flags.DEFINE_integer(
-	'image_size', 8,
+	'image_size', 32,
 	'The image size to use, otherwise use the model default_image_size.')
 
 tf.app.flags.DEFINE_integer(
 	'number_of_classes', 32,
 	'number of classes')
-
-# 1024*768		:	12288
-# 1920*1080		: 32640
+# 8x8: 12288, 32640 	|| half: 32640/2 = 16320
+# 16x16: 3072, 8160		|| half: 8160/2 = 4080
+# 32x32: 768, 2040		|| half: 2040/2 = 1020
 tf.app.flags.DEFINE_integer(
-	'batch_size', 32640,
+	'batch_size', 4080, #
 	'Batch size for the exported model. Defaulted to ``int(1)``')
 
 tf.app.flags.DEFINE_string('dataset', 'fdc',
@@ -54,7 +54,7 @@ tf.app.flags.DEFINE_string('dataset', 'fdc',
 
 tf.app.flags.DEFINE_string(
 	'output_file',
-	'/Users/Pharrell_WANG/workspace/models/resnet/graphs/resnet_inf_graph_for_fdc_32640.pb',
+	'/Users/Pharrell_WANG/workspace/models/resnet/graphs/resnet_inf_graph_for_fdc.pb',
 	'Where to save the resulting file to.')
 
 FLAGS = tf.app.flags.FLAGS
@@ -71,6 +71,9 @@ def main(_):
 																				image_size,
 																				image_size,
 																				1])
+		if image_size == 32:
+			size_tensor = tf.constant([16, 16])
+			placeholder = tf.image.resize_images(placeholder, size_tensor, 3, False)
 		hps = resnet_model.HParams(dataset_name=FLAGS.dataset,
 															 batch_size=FLAGS.batch_size,
 															 num_classes=FLAGS.number_of_classes,
