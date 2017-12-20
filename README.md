@@ -18,6 +18,8 @@
     $ bazel-bin/resnet/resnet_main --eval_data_path='/Users/Pharrell_WANG/data/smooth_removed/data/test_08x08.csv' --log_root="/Users/Pharrell_WANG/workspace/models/resnet/log" --eval_dir='/Users/Pharrell_WANG/workspace/models/resnet/log/eval' --mode=eval --dataset='fdc' --num_gpus=0
          
 
+Original repo: https://github.com/tensorflow/models/tree/master/research/resnet
+
 <b>Related papers:</b>
 
 Identity Mappings in Deep Residual Networks
