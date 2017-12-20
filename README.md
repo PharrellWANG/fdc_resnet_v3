@@ -20,6 +20,8 @@
 
 Original repo: https://github.com/tensorflow/models/tree/master/research/resnet
 
+contact: panyx0718 (xpan@google.com)
+
 <b>Related papers:</b>
 
 Identity Mappings in Deep Residual Networks
